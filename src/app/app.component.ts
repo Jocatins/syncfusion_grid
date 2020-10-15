@@ -6,6 +6,7 @@ import {
   SaveEventArgs,
 } from '@syncfusion/ej2-angular-grids';
 import { Internationalization } from '@syncfusion/ej2-base';
+import { DataUtil } from '@syncfusion/ej2-data';
 
 @Component({
   selector: 'app-root',
@@ -20,51 +21,96 @@ import { Internationalization } from '@syncfusion/ej2-base';
         field="OrderID"
         headerText="Order ID"
         textAlign="Right"
-        editType="numericedit"
-        width="50"
+        width="90"
       ></e-column>
       <e-column
         field="CustomerID"
         headerText="Customer ID"
-        editType="dropdownedit"
-        [edit]="deParams"
-        width="50"
+        width="120"
       ></e-column>
-      <e-column
-        field="EmployeeID"
-        headerText="Employee ID"
-        editType="dropdownedit"
-        [edit]="deParams"
-        width="50"
-        format="P"
-      ></e-column>
-      <e-column
-        field="Validity"
-        headerText="Validity Period"
-        width="50"
-        [valueAccessor]="valueAccess"
-      >
-        <ng-template #editTemplate>
-          <ejs-daterangepicker [(value)]="orderData.Validity" format="yMd">
-          </ejs-daterangepicker>
-        </ng-template>
-      </e-column>
       <e-column
         field="Freight"
         headerText="Freight"
         textAlign="Right"
         format="C2"
-        editType="numericedit"
-        width="50"
+        width="90"
       ></e-column>
       <e-column
         field="OrderDate"
         headerText="Order Date"
         textAlign="Right"
         format="yMd"
-        width="50"
+        width="120"
+      ></e-column>
+      <e-column
+        field="ShipPostalCode"
+        headerText="Ship Postal Code"
+        textAlign="Right"
+        width="120"
       ></e-column>
     </e-columns>
+    <ng-template #editSettingsTemplate let-data>
+      <div ngForm #orderForm="ngForm">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <div class="e-float-input e-control-wrapper">
+              <input
+                [(ngModel)]="orderData.OrderID"
+                id="OrderID"
+                name="OrderID"
+                type="text"
+                [attr.disabled]="!data.isAdd ? '' : null"
+              />
+              <span class="e-float-line"></span>
+              <label class="e-float-text e-label-top" for="OrderID">
+                Order ID</label
+              >
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <div class="e-float-input e-control-wrapper">
+              <input
+                [(ngModel)]="orderData.CustomerID"
+                id="CustomerID"
+                name="CustomerID"
+                type="text"
+              />
+              <span class="e-float-line"></span>
+              <label class="e-float-text e-label-top" for="CustomerID">
+                Customer ID</label
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <ejs-numerictextbox
+              [(ngModel)]="orderData.EmployeeID"
+              name="EmployeeID"
+              placeholder="EmployeeID"
+            ></ejs-numerictextbox>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <ejs-daterangepicker
+            [(ngModel)]="orderData.Validity"
+            name="Validity"
+            placeholder="Validity"
+          >
+          </ejs-daterangepicker>
+        </div>
+        <div class="form-group col-md-6">
+          <ejs-dropdownlist
+            [(ngModel)]="orderData.ShipName"
+            name="ShipName"
+            placeholder="ShipName"
+            [dataSource]="productionCityData"
+          >
+          </ejs-dropdownlist>
+        </div>
+      </div>
+    </ng-template>
   </ejs-grid>`,
   // templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
@@ -160,4 +206,5 @@ export class AppComponent {
       Validity: [new Date(2020, 2, 2), new Date(2023, 7, 10)],
     },
   ];
+  public productionCityData = DataUtil.distinct(this.data, 'ShipName', true);
 }

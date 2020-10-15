@@ -9,10 +9,23 @@ import {
   ToolbarService,
 } from '@syncfusion/ej2-angular-grids';
 import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
+import { FormsModule } from '@angular/forms';
+import { NumericTextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
+import { DatePickerAllModule } from '@syncfusion/ej2-angular-calendars';
+import { DropDownListAllModule } from '@syncfusion/ej2-angular-dropdowns';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, GridModule, PagerModule, DateRangePickerModule],
+  imports: [
+    BrowserModule,
+    GridModule,
+    PagerModule,
+    DateRangePickerModule,
+    FormsModule,
+    NumericTextBoxAllModule,
+    DatePickerAllModule,
+    DropDownListAllModule,
+  ],
   providers: [EditService, ToolbarService],
   bootstrap: [AppComponent],
 })
